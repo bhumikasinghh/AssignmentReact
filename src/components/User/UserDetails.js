@@ -1,62 +1,69 @@
- import React from "react";
+import React from "react";
 import data from '../Data/data.json';
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Component} from 'react';
+import { Modal } from "react-bootstrap";
+import {Calendar }from 'react-calendar';
 
 export  class UserDetails extends Component {
-    state =  {
-        users: [],
+    state = {
         show: false,
-        activity_periods: [],
+        user: [],
       };
     
-    // renderUser=()=>{
-    //     const newdata1 = data.members;
-    //     {newdata1.map((userDetail,index)=>{
-    //     for (let i = 0; i < newdata1.length; i++) 
-    //     {
-    //         user.push({
-    //            id: userDetail.id,
-    //            name:userDetail.real_name,
-    //            timezome:userDetail.tz
-    //         })
-    //     }
-    //     })
-    // }
-
+      showUserActivity = (a) => {
+        this.setState({
+          user:a.activity_periods,
+          show: true,
+        });
+      };
+    
+      handleClose = () => {
+        this.setState({ show: false });
+      };
   render()
   {
-     const user=[];
-    const newdata = data.members;
-   
-    for(let i=1;i<newdata.length;i++)
-    { 
-        {newdata.map((userDetail,index)=>{
-        
-       user.push({  
-        id:userDetail.id,
-        name: userDetail.real_name,
-         timezone:userDetail.tz})
-                                       }
-                    ) 
-     }
-  }
-    return (
-      <div>
-        <h1>User Details</h1>
-        {/* {newdata.map((userDetail,index)=> */}
-                      <div className="container" style={{ marginTop: 50 }}>
-                         <BootstrapTable data={ user }  hover={ true } condensed={ true }>
-                            <TableHeaderColumn dataField='id' dataAlign='center' isKey>User ID </TableHeaderColumn>
-                            <TableHeaderColumn dataField='name' dataAlign='center'>User Name</TableHeaderColumn>
-                            <TableHeaderColumn dataField='timezone' dataAlign='center'>Timezone</TableHeaderColumn>
+    const newdata = data.members;   
+  return (
+        <div className="container" style={{ marginTop: 30 }}>
+          <h1>User Details</h1>
+          {newdata.map((userDetail, index) => (
+            <div>
+                <table className="table table-sm table-dark">   
+                <tbody > 
+                        <tr>
+                            <td>{userDetail.id}</td>
+                            <td>{userDetail.tz}</td>
+                            <td onClick={() => this.showUserActivity(userDetail)} >
+                                {userDetail.real_name}
+                             </td>
                             
-                        </BootstrapTable>
-                        </div>
-                   
-       
-        </div>   
-        )}
-        }
-
-
+                        </tr>
+                        </tbody> 
+                    </table>
+            </div>
+          ))}
+   
+   
+          <Modal  
+          show={this.state.show} onHide={this.handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title >
+                    User Activity Periods
+                </Modal.Title>
+            </Modal.Header>
+             <Modal.Body>
+                    {this.state.user.map((item) => (
+                        <ul>
+                            <li>
+                                <p >{item.start_time}</p>
+                                <p>{item.end_time}</p>
+                            </li>
+                        </ul>
+                    ))}
+                    <Calendar value={new Date()} />
+            </Modal.Body>
+        </Modal>
+        </div>
+      );
+    }
+  }

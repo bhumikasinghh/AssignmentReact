@@ -13,7 +13,34 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.modal{
+  position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+     background-color:rgb(80, 224, 205);
+     font-style: italic;
+     text-align: center;
+}
+ul{
+  text-align: left;
+}
+.modal-body{
+  text-align: center;
+  background-color:rgb(231, 130, 231);
+  align-self: center;
+}
+.modal-header{
+  align-self: center;
+}
+.modal-content{
+  background-color: peachpuff;
+}
+.modal-title{
+  align-self: center;
 
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -25,6 +52,10 @@
   color: white;
 }
 
+h1{
+  font-style: italic;
+  background-color: lightcoral;
+}
 .App-link {
   color: #61dafb;
 }
